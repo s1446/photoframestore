@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>📦 Delivery Address | Mani Arts</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .box {
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row > div {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .back {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        @media (max-width: 480px) {
+            .box {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>📦 Delivery Address</h2>
+
+    <form action="/place-order" method="post" onsubmit="return pay();">
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter full name">
+
+        <label>Mobile Number</label>
+        <input type="tel" id="mobile" placeholder="10-digit mobile number">
+
+        <label>House / Flat / Building</label>
+        <input type="text" id="house" placeholder="House No, Flat No">
+
+        <label>Area / Street</label>
+        <input type="text" id="area" placeholder="Street name, area">
+
+        <div class="row">
+            <div>
+                <label>City</label>
+                <input type="text" id="city" placeholder="City">
+            </div>
+            <div>
+                <label>Pincode</label>
+                <input type="text" id="pincode" placeholder="Pincode">
+            </div>
+        </div>
+
+        <label>State</label>
+        <input type="text" id="state" placeholder="State">
+
+        <!-- SENT TO BACKEND -->
+        <input type="hidden" name="address" id="fullAddress">
+
+        <button type="submit">💳 Pay Now</button>
+    </form>
+
+    <a href="/cart" class="back">← Back to Cart</a>
+</div>
+
+<script>
+function pay() {
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const house = document.getElementById("house").value.trim();
+    const area = document.getElementById("area").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const pincode = document.getElementById("pincode").value.trim();
+    const state = document.getElementById("state").value.trim();
+
+    if (!name || !mobile || !house || !area || !city || !pincode || !state) {
+        alert("Please fill all address details");
+        return false;
+    }
+
+    const address =
+        `${name}, ${mobile}, ${house}, ${area}, ${city} - ${pincode}, ${state}`;
+
+    document.getElementById("fullAddress").value = address;
+
+    const upiId = "9502219329@ibl";
+    const upiLink = `upi://pay?pa=${upiId}&pn=Mani Arts&cu=INR`;
+
+    // 📱 MOBILE → open UPI app
+    if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        setTimeout(() => {
+            window.location.href = upiLink;
+        }, 500);
+    } 
+    // 💻 LAPTOP → show message
+    else {
+        alert(
+            "UPI payment works on mobile.\n\n" 
+            
+        );
+    }
+
+    return true; // submit form → order saved
+}
+</script>
+
+</body>
+</html>
