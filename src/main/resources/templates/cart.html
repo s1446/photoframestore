@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>🛒 Cart | Mani Arts</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #f6f8fb, #e9edf3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .cart-wrapper {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .cart-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 14px;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            margin-bottom: 15px;
+            gap: 12px;
+        }
+
+        .cart-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .price {
+            color: #1b7f3a;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .remove {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #ff4d4d;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .total-box {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 8px;
+            display: inline-block;
+        }
+
+        .checkout {
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            color: black;
+        }
+
+        .home {
+            background: #111;
+            color: white;
+        }
+
+        .empty {
+            text-align: center;
+            margin-top: 70px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* 📱 MOBILE FIX */
+        @media (max-width: 600px) {
+            .cart-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-card img {
+                width: 100%;
+                height: 180px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🛒 Your Cart</h1>
+    <p>Select items and proceed to checkout</p>
+</div>
+
+<div class="cart-wrapper">
+
+    <div th:if="${#lists.isEmpty(cartItems)}" class="empty">
+        Your cart is empty 😔<br><br>
+        <a href="/frames" class="btn home">🖼 Continue Shopping</a>
+    </div>
+
+    <div th:each="item : ${cartItems}" class="cart-card">
+        <input type="checkbox"
+               class="item-check"
+               checked
+               th:attr="data-price=${item.price}"
+               onchange="updateTotal()">
+
+        <img th:src="${item.imageUrl}" alt="Frame">
+
+        <div class="details">
+            <h3 th:text="${item.name}"></h3>
+            <p>📐 <span th:text="${item.size}"></span></p>
+            <div class="price">₹ <span th:text="${item.price}"></span></div>
+
+            <a th:href="@{'/cart/remove/' + ${item.id}}"
+               class="remove"
+               onclick="return confirm('Remove this item?')">
+                🗑 Remove
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(cartItems)}" class="total-box">
+        <h2>Total Amount</h2>
+        <div style="font-size:26px;font-weight:bold;">
+            ₹ <span id="totalAmount">0</span>
+        </div>
+
+        <a href="/" class="btn home">🏠 Home</a>
+        <a href="/address" class="btn checkout">➡ Checkout</a>
+    </div>
+
+</div>
+
+<script>
+function updateTotal() {
+    let total = 0;
+    const delivery = 50;
+
+    document.querySelectorAll(".item-check").forEach(cb => {
+        if (cb.checked) {
+            total += parseFloat(cb.getAttribute("data-price"));
+        }
+    });
+
+    if (total > 0) total += delivery;
+    document.getElementById("totalAmount").innerText = total;
+}
+updateTotal();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${frame.name} + ' | Mani Arts'">Frame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            background: #f4f6f9;
+            padding: 15px;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 25px;
+            padding: 25px;
+        }
+
+        .image-box img {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 12px;
+        }
+
+        .details h1 {
+            margin-top: 0;
+            font-size: 26px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1b7f3a;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+       .back {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: #111;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.home-btn:hover {
+    background: #333;
+}
+       
+        .cart {
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            color: black;
+        }
+
+        .delete {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        /* 📱 MOBILE */
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="image-box">
+        <img th:src="@{${frame.imageUrl}}" alt="Frame">
+    </div>
+
+    <div class="details">
+        <h1 th:text="${frame.name}"></h1>
+        <div class="price">₹ <span th:text="${frame.price}"></span></div>
+
+        <p th:text="${frame.description}"></p>
+
+        <p>📐 Size: <b th:text="${frame.size}"></b></p>
+
+        <div class="actions">
+            <a th:if="${frame.stock > 0}"
+               th:href="@{/cart/add/{id}(id=${frame.id})}"
+               class="btn cart">🛒 Add to Cart</a>
+
+            <a sec:authorize="hasRole('ADMIN')"
+               th:href="@{'/admin/delete-frame/' + ${frame.id}}"
+               class="btn delete"
+               onclick="return confirm('Delete this frame?')">
+                🗑 Delete
+            </a>
+        </div>
+
+        <a href="/" class="back">🏠 Back to home page</a>
+        
+    </div>
+</div>
+
+</body>
+</html>

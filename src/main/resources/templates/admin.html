@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Add Frame | Mani Arts</title>
+
+    <!-- ✅ Mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+            display: flex;
+            justify-content: center;
+            padding: 40px 10px;
+        }
+
+        .box {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 14px;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            margin-top: 18px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 📱 Mobile tuning */
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .box {
+                padding: 22px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>➕ Add New Photo Frame</h2>
+
+    <form method="post" action="/admin/add-frame">
+
+        <label>Frame Name</label>
+        <input type="text" name="name" required>
+
+        <label>Size</label>
+        <input type="text" name="size" placeholder="8x10 / 12x18" required>
+
+        <label>Price (₹)</label>
+        <input type="number" step="0.01" name="price" required>
+
+        <label>Description</label>
+        <textarea name="description"></textarea>
+
+        <label>Stock</label>
+        <input type="number" name="stock" required>
+
+        <label>Image URL</label>
+        <input type="text" name="imageUrl" required>
+
+        <button type="submit">💾 Add Frame</button>
+    </form>
+
+    <p class="success">[[${success}]]</p>
+
+    <a href="/admin" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Orders | Mani Arts</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .header {
+            background: #1f1c2c;
+            color: white;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 15px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .filters input,
+        .filters button,
+        .filters a {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f1f1f1;
+        }
+
+        .status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .PLACED { background: #fff3cd; color: #856404; }
+        .SHIPPED { background: #cce5ff; color: #004085; }
+        .DELIVERED { background: #d4edda; color: #155724; }
+
+        .view {
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* 📱 MOBILE */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            th, td {
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filters input,
+            .filters button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>📦 Customer Orders</h2>
+    <p>Admin Panel – Mani Arts</p>
+</div>
+
+<div class="container">
+
+    <form class="filters" method="get" action="/admin/orders">
+        <input type="text" name="search" placeholder="Search by username">
+        <input type="date" name="date">
+        <button type="submit">Apply</button>
+        <a href="/admin/orders">Reset</a>
+    </form>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Address</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td>#<span th:text="${order.id}"></span></td>
+                    <td th:text="${order.username}"></td>
+                    <td th:text="${order.address}"></td>
+                    <td>₹ <span th:text="${order.totalAmount}"></span></td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td>
+                        <span class="status"
+                              th:text="${order.status}"
+                              th:classappend="' ' + ${order.status}">
+                        </span>
+                    </td>
+                    <td>
+                        <a class="view"
+                           th:href="@{/admin/orders/{id}(id=${order.id})}">
+                           👁 View
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/admin" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>
