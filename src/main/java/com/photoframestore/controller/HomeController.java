@@ -23,8 +23,10 @@ public class HomeController {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private OrderService orderService;
+
     // HOME
     @GetMapping("/")
     public String home() {
@@ -37,34 +39,12 @@ public class HomeController {
         return "contact";
     }
 
-    // LOGIN
+    // LOGIN PAGE (Let Spring Security handle authentication)
     @GetMapping("/login")
-    public String login(HttpSession session) {
-        session.invalidate();
+    public String login() {
         return "login";
     }
-    @PostMapping("/place-order")
-    public String placeOrder(
-            @RequestParam String address,
-            HttpSession session) {
 
-        User user = (User) session.getAttribute("loggedUser");
-
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        Order order = new Order();
-        order.setUsername(user.getName());
-        order.setAddress(address);
-        order.setTotalAmount(2499); // later calculate from cart
-        order.setOrderDate(java.time.LocalDateTime.now());
-        order.setStatus("PLACED");
-
-        orderService.saveOrder(order);
-
-        return "redirect:/order-success";
-    }
     // REGISTER PAGE
     @GetMapping("/register")
     public String register() {
@@ -81,12 +61,36 @@ public class HomeController {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(password);
-        user.setRole("USER");
+        user.setPassword(password); // ⚠ plain text (ok for now)
+        user.setRole("ROLE_USER");  // ✅ Must use ROLE_USER
 
         userRepository.save(user);
 
         return "redirect:/login?registered";
+    }
+
+    // PLACE ORDER
+    @PostMapping("/place-order")
+    public String placeOrder(
+            @RequestParam String address,
+            HttpSession session) {
+
+        User user = (User) session.getAttribute("loggedUser");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        Order order = new Order();
+        order.setUsername(user.getName());
+        order.setAddress(address);
+        order.setTotalAmount(2499);
+        order.setOrderDate(java.time.LocalDateTime.now());
+        order.setStatus("PLACED");
+
+        orderService.saveOrder(order);
+
+        return "redirect:/order-success";
     }
 
     // FRAME DETAILS

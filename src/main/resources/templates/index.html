@@ -1,60 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <title>Mani Arts</title>
+    <title>FrameAura</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+
+        :root {
+            --bg-color: #f5f5f5;
+            --text-color: #111;
+            --card-bg: #ffffff;
+            --nav-bg: #ffffff;
+        }
+
+        body.dark {
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --nav-bg: #1a1a1a;
+        }
+
         body {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
-            background: #f5f5f5;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: 0.3s ease;
         }
 
-        /* ================= NAVBAR (WHITE) ================= */
+        /* ================= NAVBAR ================= */
         nav {
-            background: white;                 /* ✅ WHITE BACKGROUND */
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .nav-top {
+            background: var(--nav-bg);
+            padding: 14px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .logo {
-            color: #111;                      /* ✅ DARK TEXT */
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
-        .links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .links a {
+        .nav-right a {
             text-decoration: none;
-            color: #111;                      /* ✅ DARK TEXT */
-            background: #f7f7f7;              /* light card look */
-            padding: 12px 0;
-            text-align: center;
-            border-radius: 22px;
-            font-size: 15px;
+            color: var(--text-color);
             font-weight: 600;
-            border: 1px solid #ddd;
-            transition: all 0.2s ease;
         }
 
-        .links a:hover {
-            background: #eaeaea;
-            transform: translateY(-1px);
+        /* ================= PROFILE DROPDOWN ================= */
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-btn {
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-weight: 600;
+        }
+
+        .dropdown {
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            width: 160px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dropdown a {
+            padding: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .dropdown a:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .profile:hover .dropdown {
+            display: flex;
+        }
+
+        .dark-toggle {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            background: var(--card-bg);
+            cursor: pointer;
         }
 
         /* ================= HERO ================= */
@@ -74,161 +124,79 @@
         }
 
         .hero h1 {
-            font-size: 40px;
-            margin-bottom: 14px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 28px;
-            color: #f0f0f0;
+            font-size: 42px;
         }
 
         .hero a {
+            margin-top: 20px;
             display: inline-block;
-            padding: 18px 50px;
-            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            padding: 14px 35px;
+            background: #ffcc00;
             color: black;
             text-decoration: none;
-            font-size: 20px;
+            border-radius: 30px;
             font-weight: bold;
-            border-radius: 40px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
         }
 
         /* ================= FEATURES ================= */
         .features {
-            background: white;
-            padding: 50px 20px;
+            background: var(--card-bg);
+            padding: 70px 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 30px;
             text-align: center;
         }
 
         .feature {
-            background: #fafafa;
-            padding: 25px;
-            border-radius: 14px;
+            background: var(--bg-color);
+            padding: 30px;
+            border-radius: 16px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
-        .feature h3 {
-            margin-bottom: 8px;
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 25px;
         }
 
-        .feature p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* ================= MOBILE ================= */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .hero a {
-                font-size: 22px;
-                padding: 20px 60px;
-            }
-        }
-        /* ================= EXTRA SECTIONS ================= */
-
-.section {
-    padding: 60px 20px;
-    background: #f5f5f5;
-}
-
-.section.white {
-    background: white;
-}
-
-.section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 30px;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.card-box {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.card-box h3 {
-    margin-bottom: 10px;
-}
-
-.card-box p {
-    font-size: 14px;
-    color: #555;
-}
-
-/* CTA */
-.cta {
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: white;
-    text-align: center;
-    padding: 70px 20px;
-}
-
-.cta a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 16px 50px;
-    background: #ffcc00;
-    color: black;
-    font-weight: bold;
-    border-radius: 40px;
-    text-decoration: none;
-}
-
-/* FOOTER */
-footer {
-    background: #111;
-    color: #aaa;
-    text-align: center;
-    padding: 30px 20px;
-    font-size: 14px;
-}
-        
     </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 <nav>
-    <div class="nav-top">
-        <div class="logo">🎨 Mani Arts</div>
-    </div>
+    <div class="logo" onclick="window.location.href='/'">🎨 FrameAura</div>
 
-    <div class="links">
-       
-        <a href="/login">🔐 Login</a>
-        <a href="/register">📝 Register</a>
+    <div class="nav-right">
+
         <a href="/cart">🛒 Cart</a>
         <a href="/contact">📞 Contact</a>
-        <a sec:authorize="hasRole('ADMIN')" href="/admin">🛠 Admin</a>
+
+        <!-- PROFILE DROPDOWN -->
+        <div class="profile">
+            <div class="profile-btn">👤 Profile</div>
+
+            <div class="dropdown">
+
+                <!-- If NOT Logged In -->
+                <a sec:authorize="!isAuthenticated()" href="/login">🔐 Login</a>
+                <a sec:authorize="!isAuthenticated()" href="/register">📝 Register</a>
+
+                <!-- If Logged In -->
+                <a sec:authorize="isAuthenticated()" href="/profile">👤 My Profile</a>
+                <a sec:authorize="isAuthenticated()" href="/logout">🚪 Logout</a>
+
+            </div>
+        </div>
+
+        <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+
     </div>
 </nav>
 
-<!-- ================= HERO ================= -->
 <div class="hero">
     <div>
         <h1>Frame Your Memories ✨</h1>
@@ -237,7 +205,6 @@ footer {
     </div>
 </div>
 
-<!-- ================= FEATURES ================= -->
 <div class="features">
     <div class="feature">
         <h3>🚚 Fast Delivery</h3>
@@ -259,62 +226,16 @@ footer {
         <p>Perfect fit for every photo</p>
     </div>
 </div>
-<!-- ================= WHY CHOOSE US ================= -->
-<div class="section white">
-    <h2>Why Choose Mani Arts?</h2>
 
-    <div class="cards">
-        <div class="card-box">
-            <h3>🖐 Handcrafted</h3>
-            <p>Each frame is carefully handcrafted by skilled artisans.</p>
-        </div>
-
-        <div class="card-box">
-            <h3>🌿 Eco Friendly</h3>
-            <p>We use sustainable materials that are safe for the environment.</p>
-        </div>
-
-        <div class="card-box">
-            <h3>⭐ Trusted by 1000+</h3>
-            <p>Loved by customers across India.</p>
-        </div>
-    </div>
-</div>
-
-<!-- ================= CUSTOMER REVIEWS ================= -->
-<div class="section">
-    <h2>What Our Customers Say</h2>
-
-    <div class="cards">
-        <div class="card-box">
-            <p>“Beautiful frames and amazing quality. Totally worth it!”</p>
-            <strong>– Anjali, Hyderabad</strong>
-        </div>
-
-        <div class="card-box">
-            <p>“Fast delivery and premium finishing. Highly recommended.”</p>
-            <strong>– Rahul, Bengaluru</strong>
-        </div>
-
-        <div class="card-box">
-            <p>“Perfect gift for my family photos. Loved it.”</p>
-            <strong>– Sneha, Chennai</strong>
-        </div>
-    </div>
-</div>
-
-<!-- ================= CALL TO ACTION ================= -->
-<div class="cta">
-    <h2>Ready to Frame Your Memories?</h2>
-    <p>Browse our exclusive collection now</p>
-    <!--<a href="/frames">🖼 Explore Frames</a>-->
-</div>
-
-<!-- ================= FOOTER ================= -->
 <footer>
-    <p>© 2026 Mani Arts • All Rights Reserved</p>
-    <p>Made with ❤️ in India</p>
+    © 2026 Mani Arts • All Rights Reserved
 </footer>
+
+<script>
+    function toggleDark() {
+        document.body.classList.toggle("dark");
+    }
+</script>
 
 </body>
 </html>

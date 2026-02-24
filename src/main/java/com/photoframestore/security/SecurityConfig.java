@@ -10,41 +10,44 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    // ✅ Plain-text password encoder (for now)
     @SuppressWarnings("deprecation")
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
+
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/", "/login", "/register", "/frames", "/address",
-                    "/css/**", "/js/**", "/images/**"
+                    "/login",
+                    "/register",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**"
                 ).permitAll()
+
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+
+                .anyRequest().authenticated()   // 🔥 EVERYTHING else needs login
             )
+
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/", true)  // after login → home
                 .permitAll()
             )
+
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true)   // ✅ KILLS SESSION
-                .clearAuthentication(true)     // ✅ CLEARS USER
-                .deleteCookies("JSESSIONID")   // ✅ VERY IMPORTANT
+                .logoutSuccessUrl("/login")
                 .permitAll()
             );
 
         return http.build();
     }
-
-   
 }
