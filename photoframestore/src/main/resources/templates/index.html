@@ -11,9 +11,8 @@
             background: #f5f5f5;
         }
 
-        /* ================= NAVBAR (WHITE) ================= */
         nav {
-            background: white;                 /* ✅ WHITE BACKGROUND */
+            background: white;
             padding: 14px;
             display: flex;
             flex-direction: column;
@@ -28,7 +27,7 @@
         }
 
         .logo {
-            color: #111;                      /* ✅ DARK TEXT */
+            color: #111;
             font-size: 22px;
             font-weight: bold;
         }
@@ -41,8 +40,8 @@
 
         .links a {
             text-decoration: none;
-            color: #111;                      /* ✅ DARK TEXT */
-            background: #f7f7f7;              /* light card look */
+            color: #111;
+            background: #f7f7f7;
             padding: 12px 0;
             text-align: center;
             border-radius: 22px;
@@ -57,7 +56,6 @@
             transform: translateY(-1px);
         }
 
-        /* ================= HERO ================= */
         .hero {
             min-height: 85vh;
             background:
@@ -96,7 +94,6 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.35);
         }
 
-        /* ================= FEATURES ================= */
         .features {
             background: white;
             padding: 50px 20px;
@@ -122,113 +119,77 @@
             color: #555;
         }
 
-        /* ================= MOBILE ================= */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .hero a {
-                font-size: 22px;
-                padding: 20px 60px;
-            }
+        .section {
+            padding: 60px 20px;
+            background: #f5f5f5;
         }
-        /* ================= EXTRA SECTIONS ================= */
 
-.section {
-    padding: 60px 20px;
-    background: #f5f5f5;
-}
+        .section.white {
+            background: white;
+        }
 
-.section.white {
-    background: white;
-}
+        .section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
 
-.section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 30px;
-}
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-    max-width: 1100px;
-    margin: auto;
-}
+        .card-box {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
 
-.card-box {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    text-align: center;
-}
+        .card-box h3 {
+            margin-bottom: 10px;
+        }
 
-.card-box h3 {
-    margin-bottom: 10px;
-}
+        .card-box p {
+            font-size: 14px;
+            color: #555;
+        }
 
-.card-box p {
-    font-size: 14px;
-    color: #555;
-}
+        .cta {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
 
-/* CTA */
-.cta {
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: white;
-    text-align: center;
-    padding: 70px 20px;
-}
-
-.cta a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 16px 50px;
-    background: #ffcc00;
-    color: black;
-    font-weight: bold;
-    border-radius: 40px;
-    text-decoration: none;
-}
-
-/* FOOTER */
-footer {
-    background: #111;
-    color: #aaa;
-    text-align: center;
-    padding: 30px 20px;
-    font-size: 14px;
-}
-        
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 <nav>
     <div class="nav-top">
         <div class="logo">🎨 Mani Arts</div>
     </div>
 
     <div class="links">
-       
-        <a href="/login">🔐 Login</a>
-        <a href="/register">📝 Register</a>
         <a href="/cart">🛒 Cart</a>
         <a href="/contact">📞 Contact</a>
         <a sec:authorize="hasRole('ADMIN')" href="/admin">🛠 Admin</a>
     </div>
 </nav>
 
-<!-- ================= HERO ================= -->
 <div class="hero">
     <div>
         <h1>Frame Your Memories ✨</h1>
@@ -237,7 +198,6 @@ footer {
     </div>
 </div>
 
-<!-- ================= FEATURES ================= -->
 <div class="features">
     <div class="feature">
         <h3>🚚 Fast Delivery</h3>
@@ -259,10 +219,9 @@ footer {
         <p>Perfect fit for every photo</p>
     </div>
 </div>
-<!-- ================= WHY CHOOSE US ================= -->
+
 <div class="section white">
     <h2>Why Choose Mani Arts?</h2>
-
     <div class="cards">
         <div class="card-box">
             <h3>🖐 Handcrafted</h3>
@@ -281,36 +240,6 @@ footer {
     </div>
 </div>
 
-<!-- ================= CUSTOMER REVIEWS ================= -->
-<div class="section">
-    <h2>What Our Customers Say</h2>
-
-    <div class="cards">
-        <div class="card-box">
-            <p>“Beautiful frames and amazing quality. Totally worth it!”</p>
-            <strong>– Anjali, Hyderabad</strong>
-        </div>
-
-        <div class="card-box">
-            <p>“Fast delivery and premium finishing. Highly recommended.”</p>
-            <strong>– Rahul, Bengaluru</strong>
-        </div>
-
-        <div class="card-box">
-            <p>“Perfect gift for my family photos. Loved it.”</p>
-            <strong>– Sneha, Chennai</strong>
-        </div>
-    </div>
-</div>
-
-<!-- ================= CALL TO ACTION ================= -->
-<div class="cta">
-    <h2>Ready to Frame Your Memories?</h2>
-    <p>Browse our exclusive collection now</p>
-    <!--<a href="/frames">🖼 Explore Frames</a>-->
-</div>
-
-<!-- ================= FOOTER ================= -->
 <footer>
     <p>© 2026 Mani Arts • All Rights Reserved</p>
     <p>Made with ❤️ in India</p>
