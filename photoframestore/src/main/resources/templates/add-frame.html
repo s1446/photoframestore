@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Frame - Mani Arts</title>
+
+    <!-- ✅ MOBILE SUPPORT -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            width: 420px;
+            max-width: 100%;      /* ✅ mobile fix */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 12px;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .back {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: #111;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+        /* 📱 MOBILE EXTRA POLISH */
+        @media (max-width: 480px) {
+            body {
+                padding: 20px;
+            }
+
+            .box {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>➕ Add New Frame</h2>
+
+    <form method="post"
+          action="/admin/add-frame"
+          enctype="multipart/form-data">
+
+        <label>Frame Name</label>
+        <input type="text" name="name" required>
+
+        <label>Frame Image (Upload)</label>
+        <input type="file" name="image" accept="image/*" required>
+
+        <label>Size</label>
+        <input type="text" name="size" placeholder="12x18 inches" required>
+
+        <label>Price (₹)</label>
+        <input type="number" name="price" required>
+
+        <label>Stock</label>
+        <input type="number" name="stock" required>
+
+        <label>Description</label>
+        <textarea name="description" rows="3"></textarea>
+
+        <button type="submit">💾 Save Frame</button>
+    </form>
+
+ <a href="/" class="back">🏠 Back to Dashboard</a>
+</div>
+
+</body>
+</html>

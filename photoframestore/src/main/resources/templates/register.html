@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account | Mani Arts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 400px;
+            background: white;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px;
+            background: #1f1c2c;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #1f1c2c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📝 Create Account</h2>
+
+    <div id="error" class="error"></div>
+
+    <form method="post" action="/register" onsubmit="return validatePasswords()">
+
+        <label>Full Name</label>
+        <input type="text" name="name" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" required>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <div class="links">
+        Already have an account?
+        <a href="/login">Login</a>
+        <br><br>
+        <a href="/">🏠 Back to Home</a>
+    </div>
+
+</div>
+
+<script>
+function validatePasswords() {
+    const pass = document.getElementById("password").value;
+    const confirm = document.getElementById("confirmPassword").value;
+    const error = document.getElementById("error");
+
+    if (pass !== confirm) {
+        error.textContent = "Passwords do not match ❌";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
+</script>
+
+</body>
+</html>

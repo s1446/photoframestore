@@ -1,0 +1,13 @@
+package com.photoframestore;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PhotoframestoreApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Frames | Mani Arts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body { background: #f4f6f9; }
+
+        .header {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+         .home-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: #111;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.home-btn:hover {
+    background: #333;
+}
+         
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 14px;
+            text-align: center;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #1b7f3a;
+            margin: 6px 0;
+        }
+
+        /* BUTTONS */
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 18px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-cart {
+            background: linear-gradient(135deg, #ffcc00, #f2b705);
+            color: black;
+        }
+
+        .btn-view {
+            background: #111;
+            color: white;
+        }
+
+        .btn-cart:hover { opacity: 0.9; }
+        .btn-view:hover { background: #333; }
+
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            gap: 6px;
+        }
+
+        .pagination a {
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .pagination .nav {
+            background: #111;
+            color: white;
+        }
+
+        .pagination .page {
+            background: #eee;
+            color: black;
+        }
+
+        .pagination .active {
+            background: #ffcc00;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h2>🖼️ Photo Frames</h2>
+    <a href="/" class="home-btn">🏠 Home</a>
+    
+</div>
+
+<!-- FRAMES GRID -->
+<div class="container">
+
+    <div class="card"
+         th:each="frame : ${frames}"
+         th:onclick="|location.href='/frames/${frame.id}'|">
+
+        <img th:src="@{${frame.imageUrl}}">
+
+        <div class="card-body">
+            <h4 th:text="${frame.name}"></h4>
+            <p>📐 <span th:text="${frame.size}"></span></p>
+
+            <div class="price">
+                ₹ <span th:text="${frame.price}"></span>
+            </div>
+
+            <div class="actions">
+                <a th:href="@{/cart/add/{id}(id=${frame.id})}"
+                   class="btn btn-cart"
+                   onclick="event.stopPropagation();">
+                    🛒 Add
+                </a>
+
+                <a th:href="@{/frames/{id}(id=${frame.id})}"
+                   class="btn btn-view"
+                   onclick="event.stopPropagation();">
+                    👁 View
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- PAGINATION -->
+<div class="pagination">
+
+    <!-- PREVIOUS -->
+    <a th:if="${currentPage > 0}"
+       th:href="@{/frames(page=${currentPage - 1})}"
+       class="nav">
+        ⬅ Prev
+    </a>
+
+    <!-- PAGE NUMBERS -->
+    <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+       th:href="@{/frames(page=${i})}"
+       th:text="${i + 1}"
+       th:class="${i == currentPage} ? 'active' : 'page'">
+    </a>
+
+    <!-- NEXT -->
+    <a th:if="${currentPage + 1 < totalPages}"
+       th:href="@{/frames(page=${currentPage + 1})}"
+       class="nav">
+        Next ➡
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us | Mani Arts</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: #25D366;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1ebe5d;
+        }
+
+        .phone {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📞 Contact Us</h2>
+
+    <label>Your Name</label>
+    <input type="text" id="name">
+
+    <label>Email</label>
+    <input type="email" id="email">
+
+    <label>Contact Reason</label>
+    <select id="reason">
+        <option value="">-- Select --</option>
+        <option>Custom Frame</option>
+        <option>Bulk Order</option>
+        <option>Delivery Query</option>
+        <option>Other</option>
+    </select>
+
+    <label>Your Message</label>
+    <textarea id="message"></textarea>
+
+    <button onclick="sendWhatsApp()">Send Message</button>
+
+    <div class="phone">
+        📞 Call us: <b>9502219329</b>
+    </div>
+
+    <a href="/" class="back">🏠 Back to Home</a>
+</div>
+
+<script>
+function sendWhatsApp() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const reason = document.getElementById("reason").value;
+    const message = document.getElementById("message").value;
+
+    if(name === "" || message === "") {
+        alert("Please fill Name and Message");
+        return;
+    }
+
+    const text =
+        `New Contact Request:%0AName: ${name}%0AEmail: ${email}%0AReason: ${reason}%0AMessage: ${message}`;
+
+    window.open(`https://wa.me/919502219329?text=${text}`, "_blank");
+}
+</script>
+
+</body>
+</html>
