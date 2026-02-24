@@ -85,11 +85,7 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.in28minuates</groupId>
-			<artifactId>learn-spring-boot</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>
